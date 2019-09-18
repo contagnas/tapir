@@ -228,6 +228,16 @@ lazy val clientTests: Project = (project in file("client/tests"))
   )
   .dependsOn(tests)
 
+lazy val clientCore: Project = (project in file("client/client-core"))
+  .settings(commonSettings)
+  .settings(
+    name := "tapir-client-core",
+    libraryDependencies ++= Seq(
+    )
+  )
+  .dependsOn(core)
+
+
 lazy val sttpClient: Project = (project in file("client/sttp-client"))
   .settings(commonSettings)
   .settings(
