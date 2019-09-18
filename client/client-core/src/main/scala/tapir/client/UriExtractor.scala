@@ -72,7 +72,7 @@ object UriExtractor {
 
   private def paramsTupleToParams[I](params: I): Vector[Any] = ParamsToSeq(params).toVector
 
-  def extractUri[I, E, O, S](baseUri: URI, endpoint: Endpoint[I, E, O, S], params: I): URI = {
+  def extractUri[I, E, O, S](baseUri: URI, endpoint: Endpoint[I, E, O, S], params: I): (URI, RequestMetadata) = {
     def setInputParams(
         inputs: Vector[EndpointInput.Single[_]],
         params: Vector[Any],
@@ -157,6 +157,12 @@ object UriExtractor {
       }
     }
 
-    setInputParams(endpoint.input.asVectorOfSingleInputs, paramsTupleToParams(params), 0, baseUri, RequestMetadata())._1
+    setInputParams(
+      endpoint.input.asVectorOfSingleInputs,
+      paramsTupleToParams(params),
+      0,
+      baseUri,
+      RequestMetadata()
+    )
   }
 }

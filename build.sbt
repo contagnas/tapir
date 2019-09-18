@@ -54,6 +54,7 @@ lazy val rootProject = (project in file("."))
     akkaHttpServer,
     http4sServer,
     sttpClient,
+    http4sClient,
     tests,
     examples,
     playground
@@ -248,6 +249,18 @@ lazy val sttpClient: Project = (project in file("client/sttp-client"))
     )
   )
   .dependsOn(core, clientTests % "test")
+
+lazy val http4sClient: Project = (project in file("client/http4s-client"))
+  .settings(commonSettings)
+  .settings(
+    name := "tapir-http4s-client",
+    libraryDependencies ++= dependenciesFor(scalaVersion.value)(
+      "org.http4s" %% "http4s-blaze-client" % Versions.http4s(_),
+      "org.http4s" %% "http4s-circe" % Versions.http4s(_),
+    )
+  )
+  .dependsOn(core, clientCore, circeJson, clientTests % "test")
+
 
 // other
 
