@@ -98,8 +98,8 @@ object UriExtractor {
 
       inputs match {
         case Vector() => (uri, req)
-        case EndpointInput.FixedMethod(_) +: tail =>
-          setInputParams(tail, params, paramIndex, uri, req)
+        case EndpointInput.FixedMethod(m) +: tail =>
+          setInputParams(tail, params, paramIndex, uri, req.copy(method = m.m))
         case EndpointInput.FixedPath(p) +: tail =>
           setInputParams(tail, params, paramIndex, uri.update(UriComponent(path = List(p))), req)
         case EndpointInput.PathCapture(codec, _, _) +: tail =>
